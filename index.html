@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Official artist profile of Mexican DJ and music producer Kristofer Robyn." />
+    <title>Kristofer Robyn — DJ &amp; Music Producer</title>
+
+    <style>
+      :root {
+        --black: #030303;
+        --white: #f5f5f2;
+        --muted: #a1a1a1;
+        --line: rgba(255, 255, 255, 0.16);
+        --acid: #ff1a1a;
+        --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        min-width: 320px;
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      a { color: inherit; text-decoration: none; }
+      .filter-definitions { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+      /* El Reel permanece fijo como fondo en toda la página. */
+      .video-background {
+        position: fixed;
+        z-index: 0;
+        inset: 0;
+        overflow: hidden;
+        background: radial-gradient(circle at 60% 35%, #2b2b2b 0, #090909 35%, #000 75%);
+        pointer-events: none;
+      }
+      .video-background video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max(100vw, 56.25vh);
+        height: max(177.78vw, 100vh);
+        border: 0;
+        object-fit: cover;
+        opacity: 0.9;
+        filter: grayscale(0.18) brightness(0.5) contrast(1.18) saturate(0.9);
+        transform: translate(-50%, -50%) scale(1.06);
+      }
+      .video-overlay {
+        position: fixed;
+        z-index: 1;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.52) 50%, rgba(0, 0, 0, 0.72) 100%),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.12) 50%, #030303 100%);
+        pointer-events: none;
+      }
+      .grain {
+        position: fixed;
+        z-index: 2;
+        inset: 0;
+        opacity: 0.15;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+        pointer-events: none;
+      }
+
+      main, footer { position: relative; z-index: 3; }
+
+      .site-header {
+        position: absolute;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        width: 100%;
+        padding: 1.8rem clamp(1.25rem, 5vw, 5.5rem);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .brand {
+        display: block;
+        width: max-content;
+      }
+      .brand img {
+        display: block;
+        width: clamp(7.5rem, 12vw, 10.5rem);
+        height: auto;
+        filter: url(#remove-logo-black);
+      }
+      .main-nav { display: flex; gap: clamp(1.5rem, 4vw, 3.6rem); }
+      .main-nav { grid-column: 2; }
+      .main-nav a, .spotify-link, .reel-link {
+        position: relative;
+        color: #b4b4b4;
+        font-size: 0.67rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        transition: color 180ms ease;
+      }
+      .main-nav a::after {
+        position: absolute;
+        right: 0;
+        bottom: -0.55rem;
+        left: 0;
+        height: 1px;
+        background: var(--acid);
+        content: "";
+        opacity: 0;
+        transform: scaleX(0);
+        transition: 180ms ease;
+      }
+      .main-nav a:hover, .main-nav a:first-child, .spotify-link:hover, .reel-link:hover { color: var(--white); }
+      .main-nav a:hover::after, .main-nav a:first-child::after { opacity: 1; transform: scaleX(1); }
+      .spotify-link {
+        display: inline-flex;
+        align-items: center;
+        grid-column: 3;
+        justify-self: end;
+        gap: 0.6rem;
+        color: var(--white);
+      }
+      .spotify-link svg, .release-button svg {
+        width: 1rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .hero {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        min-height: 100svh;
+        padding: 9rem clamp(1.25rem, 8vw, 9rem) clamp(4rem, 8vh, 7rem);
+      }
+      .hero-content { width: 100%; }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #b6b6b6;
+        font-size: 0.63rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .hero-logo {
+        display: block;
+        width: min(64rem, 76vw);
+        height: auto;
+        margin: 1.4rem auto 0;
+        filter: url(#remove-logo-black) drop-shadow(0 1.5rem 3rem rgba(0, 0, 0, 0.72));
+      }
+      .sr-only {
+        position: absolute;
+        overflow: hidden;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        border: 0;
+        margin: -1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+      .hero-bottom {
+        display: grid;
+        grid-template-columns: 1fr minmax(18rem, 28rem) auto;
+        gap: 3rem;
+        align-items: end;
+        margin-top: clamp(3rem, 7vh, 5.5rem);
+      }
+      .hero-meta { display: flex; gap: 2rem; }
+      .hero-meta p {
+        color: #8e8e8e;
+        font-size: 0.6rem;
+        letter-spacing: 0.13em;
+        line-height: 1.6;
+        text-transform: uppercase;
+      }
+      .hero-meta strong { display: block; color: var(--white); font-weight: 700; }
+      .hero-intro { color: #c0c0c0; font-size: 0.96rem; line-height: 1.7; }
+      .reel-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding-bottom: 0.45rem;
+        border-bottom: 1px solid var(--line);
+        color: var(--white);
+      }
+      .reel-link::before {
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 50%;
+        background: var(--acid);
+        box-shadow: 0 0 1rem rgba(255, 26, 26, 0.78);
+        content: "";
+      }
+
+      .glass-section {
+        position: relative;
+        border-top: 1px solid var(--line);
+        background: rgba(3, 3, 3, 0.76);
+        backdrop-filter: blur(22px);
+      }
+      .section-wrap {
+        width: min(100%, 92rem);
+        margin: auto;
+        padding: clamp(6rem, 10vw, 10rem) clamp(1.25rem, 6vw, 6rem);
+      }
+      .section-heading {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: end;
+        margin-bottom: 4.5rem;
+      }
+      .section-heading h2, .new-copy h2, .about-copy h2 {
+        margin-top: 0.9rem;
+        font-size: clamp(3.8rem, 7vw, 7.5rem);
+        font-weight: 600;
+        letter-spacing: -0.075em;
+        line-height: 0.86;
+      }
+      .section-heading > p {
+        justify-self: end;
+        max-width: 27rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.7;
+      }
+      .music-layout {
+        display: grid;
+        grid-template-columns: 1fr minmax(19rem, 28rem);
+        gap: clamp(2.5rem, 7vw, 7rem);
+        align-items: start;
+      }
+      .track-list { border-bottom: 1px solid var(--line); }
+      .track {
+        display: grid;
+        grid-template-columns: 2rem 4.6rem 1fr auto auto;
+        gap: 1.25rem;
+        align-items: center;
+        min-height: 6.6rem;
+        border-top: 1px solid var(--line);
+        transition: padding 180ms ease, background 180ms ease;
+      }
+      .track:hover { padding: 0 1rem; background: rgba(255, 255, 255, 0.035); }
+      .track-number { color: #6f6f6f; font-size: 0.62rem; letter-spacing: 0.12em; }
+      .track-cover {
+        display: block;
+        overflow: hidden;
+        width: 4.15rem;
+        aspect-ratio: 1;
+        border-radius: 0.3rem;
+        background: #111;
+      }
+      .track-cover img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 260ms ease;
+      }
+      .track:hover .track-cover img { transform: scale(1.06); }
+      .track-info h3 {
+        margin-bottom: 0.35rem;
+        font-size: clamp(1rem, 1.4vw, 1.25rem);
+        font-weight: 580;
+        letter-spacing: -0.025em;
+      }
+      .track-info p {
+        color: #767676;
+        font-size: 0.61rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+      .track-tag {
+        padding: 0.42rem 0.68rem;
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        color: #9e9e9e;
+        font-size: 0.56rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .track-play {
+        display: grid;
+        width: 2.7rem;
+        height: 2.7rem;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        place-items: center;
+        transition: 180ms ease;
+      }
+      .track-play:hover { border-color: var(--acid); background: var(--acid); color: #050505; }
+      .track-play svg { width: 0.95rem; fill: currentColor; }
+      .spotify-player {
+        position: sticky;
+        top: 2rem;
+        padding: 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.25);
+      }
+      .spotify-player iframe { display: block; width: 100%; height: 352px; border: 0; border-radius: 13px; }
+
+      .new-section {
+        min-height: 100vh;
+        padding: clamp(6rem, 11vw, 11rem) clamp(1.25rem, 8vw, 9rem);
+      }
+      .new-card {
+        display: grid;
+        grid-template-columns: minmax(18rem, 0.9fr) 1fr;
+        gap: clamp(3rem, 9vw, 10rem);
+        align-items: center;
+        width: min(100%, 76rem);
+        margin: auto;
+      }
+      .cover-art {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 1;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(4, 4, 4, 0.78);
+        box-shadow: 0 3rem 8rem rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(14px);
+      }
+      .cover-art::after {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 35%, rgba(0, 0, 0, 0.82) 100%);
+        content: "";
+      }
+      .cover-art img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cover-label, .cover-year {
+        position: absolute;
+        z-index: 2;
+        top: 1.5rem;
+        font-size: 0.56rem;
+        font-weight: 750;
+        letter-spacing: 0.2em;
+      }
+      .cover-label { left: 1.5rem; }
+      .cover-year { right: 1.5rem; color: #777; }
+      .cover-title {
+        position: absolute;
+        z-index: 2;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        font-size: clamp(2.1rem, 4vw, 4.6rem);
+        font-weight: 700;
+        letter-spacing: -0.075em;
+        line-height: 0.8;
+        text-transform: uppercase;
+      }
+      .new-copy > p:not(.eyebrow) {
+        max-width: 31rem;
+        margin: 2rem 0 2.5rem;
+        color: #b2b2b2;
+        font-size: 1rem;
+        line-height: 1.75;
+      }
+      .release-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 1rem 1.25rem;
+        border-radius: 99px;
+        background: var(--white);
+        color: var(--black);
+        font-size: 0.66rem;
+        font-weight: 750;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        transition: 180ms ease;
+      }
+      .release-button:hover { background: var(--acid); transform: translateY(-2px); }
+
+      .release-calendar {
+        width: min(100%, 82rem);
+        margin: auto;
+      }
+      .release-calendar-header {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 3rem;
+        align-items: end;
+        margin-bottom: clamp(3.5rem, 7vw, 6rem);
+      }
+      .release-calendar-header h2 {
+        margin-top: 0.9rem;
+        font-size: clamp(3.8rem, 7vw, 7.5rem);
+        font-weight: 600;
+        letter-spacing: -0.075em;
+        line-height: 0.86;
+      }
+      .release-calendar-header > p {
+        justify-self: end;
+        max-width: 24rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.7;
+      }
+      .release-dates { border-bottom: 1px solid var(--line); }
+      .release-date {
+        display: grid;
+        grid-template-columns: minmax(8rem, 0.55fr) minmax(15rem, 1.2fr) minmax(13rem, 0.8fr) auto;
+        gap: 2rem;
+        align-items: center;
+        min-height: 7.5rem;
+        border-top: 1px solid var(--line);
+        transition: padding 180ms ease, background 180ms ease;
+      }
+      .release-date:hover {
+        padding: 0 1.25rem;
+        background: rgba(255, 255, 255, 0.035);
+      }
+      .release-date time {
+        display: flex;
+        align-items: baseline;
+        gap: 0.7rem;
+      }
+      .release-date .month {
+        color: #a0a0a0;
+        font-size: 0.63rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .release-date .day {
+        color: var(--acid);
+        font-size: 1.35rem;
+        font-weight: 650;
+        letter-spacing: -0.04em;
+      }
+      .release-date h3 {
+        font-size: clamp(1.15rem, 2vw, 1.65rem);
+        font-weight: 580;
+        letter-spacing: -0.035em;
+      }
+      .release-label {
+        color: #858585;
+        font-size: 0.64rem;
+        font-weight: 650;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+      .release-status {
+        padding: 0.48rem 0.75rem;
+        border: 1px solid rgba(255, 26, 26, 0.55);
+        border-radius: 99px;
+        color: var(--acid);
+        font-size: 0.54rem;
+        font-weight: 750;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .about-section {
+        border-top: 1px solid var(--line);
+        background: rgba(3, 3, 3, 0.84);
+        color: var(--white);
+        backdrop-filter: blur(22px);
+      }
+      .about-layout { display: grid; grid-template-columns: 0.35fr 1fr; gap: 4rem; }
+      .about-index { color: #666; font-size: 0.59rem; letter-spacing: 0.2em; }
+      .about-copy .eyebrow { color: #b6b6b6; }
+      .about-copy h2 span { font-family: inherit; font-weight: inherit; }
+      .bio {
+        max-width: 56rem;
+        margin-top: 3.7rem;
+        color: var(--muted);
+        font-size: clamp(1.05rem, 1.65vw, 1.4rem);
+        line-height: 1.75;
+      }
+      .about-facts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--line);
+      }
+      .about-facts span {
+        display: block;
+        margin-bottom: 0.55rem;
+        color: #777;
+        font-size: 0.56rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .about-facts strong { color: var(--white); font-size: 0.9rem; font-weight: 650; }
+
+      footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        padding: 2.3rem clamp(1.25rem, 5vw, 5.5rem);
+        border-top: 1px solid var(--line);
+        background: rgba(3, 3, 3, 0.86);
+        backdrop-filter: blur(18px);
+      }
+      footer p, .footer-links a {
+        color: #747474;
+        font-size: 0.56rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .footer-links { display: flex; justify-self: end; gap: 1.5rem; }
+      .footer-links a:hover { color: var(--acid); }
+
+      @media (max-width: 900px) {
+        .site-header { grid-template-columns: 1fr auto; }
+        .spotify-link { grid-column: 2; }
+        .main-nav {
+          position: fixed;
+          right: 0.8rem;
+          bottom: 0.8rem;
+          left: 0.8rem;
+          z-index: 40;
+          justify-content: space-around;
+          gap: 0;
+          padding: 1rem;
+          border: 1px solid var(--line);
+          border-radius: 99px;
+          background: rgba(5, 5, 5, 0.86);
+          backdrop-filter: blur(18px);
+        }
+        .hero-bottom { grid-template-columns: 1fr 1fr; }
+        .reel-link { grid-column: 2; justify-self: end; }
+        .music-layout { grid-template-columns: 1fr; }
+        .spotify-player { position: static; }
+        footer { margin-bottom: 5rem; }
+      }
+
+      @media (max-width: 680px) {
+        .site-header { padding-top: 1.4rem; }
+        .spotify-link { font-size: 0; }
+        .spotify-link svg { width: 1.25rem; }
+        .hero { padding-top: 8rem; }
+        .hero-logo { width: min(100%, 38rem); }
+        .hero-bottom, .section-heading, .new-card, .about-layout { grid-template-columns: 1fr; }
+        .hero-bottom { gap: 2rem; }
+        .reel-link { grid-column: auto; justify-self: start; }
+        .section-heading > p { justify-self: start; }
+        .track { grid-template-columns: 1.3rem 3.6rem 1fr auto; gap: 0.8rem; }
+        .track-cover { width: 3.5rem; }
+        .track-tag { display: none; }
+        .cover-art { order: 2; }
+        .release-calendar-header { grid-template-columns: 1fr; }
+        .release-calendar-header > p { justify-self: start; }
+        .release-date {
+          grid-template-columns: 7.2rem 1fr auto;
+          gap: 1rem;
+          padding: 1.5rem 0;
+        }
+        .release-date:hover { padding: 1.5rem 0.8rem; }
+        .release-label { grid-column: 2; }
+        .release-status { grid-column: 3; grid-row: 1 / span 2; }
+        .about-facts { grid-template-columns: 1fr; gap: 1.6rem; }
+        footer { grid-template-columns: 1fr; }
+        footer p { display: none; }
+        .footer-links {
+          width: 100%;
+          justify-content: center;
+          justify-self: center;
+          flex-wrap: wrap;
+          gap: 0.8rem 1rem;
+          text-align: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <svg class="filter-definitions" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="remove-logo-black" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+          <feColorMatrix
+            in="SourceGraphic"
+            type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    8 8 8 0 -0.08"
+          />
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="video-background" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="kristofer-robyn-background.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="video-overlay" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#music">Music</a>
+        <a href="#new">New</a>
+        <a href="#about">About</a>
+      </nav>
+      <a class="spotify-link" href="https://open.spotify.com/artist/0DUCPwJPxGkmYaPEmQJbLC" target="_blank" rel="noopener noreferrer">
+        Listen Now
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M9 4l4 4-4 4" /></svg>
+      </a>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <h1 class="sr-only">Kristofer Robyn</h1>
+          <img class="hero-logo" src="kristofer-robyn-logo.png" alt="Kristofer Robyn" />
+          <div class="hero-bottom">
+            <div class="hero-meta">
+              <p><strong>DATES</strong>SOON</p>
+              <p><strong>MERCH</strong>SOON</p>
+            </div>
+            <p class="hero-intro"></p>
+            <a class="reel-link" href="https://www.instagram.com/reel/DaGXnj4MMHB/" target="_blank" rel="noopener noreferrer">View background reel ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass-section" id="music">
+        <div class="section-wrap">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Selected releases</p>
+              <h2>Music</h2>
+            </div>
+            <p>A selection of Kristofer Robyn's latest and most-streamed electronic releases. Listen directly through the official Spotify artist player.</p>
+          </div>
+
+          <div class="music-layout">
+            <div class="track-list">
+              <article class="track">
+                <span class="track-number">01</span>
+                <a class="track-cover" href="https://open.spotify.com/track/6sZUHZG97xeJZ0JoujpdxE" target="_blank" rel="noopener noreferrer">
+                  <img src="https://i.scdn.co/image/ab67616d0000b27323688f923b651abec014661d" alt="Saturday Night cover" loading="lazy" />
+                </a>
+                <div class="track-info"><h3>Saturday Night</h3><p>Arnie Way &amp; Kristofer Robyn</p></div>
+                <span class="track-tag">Single · 2025</span>
+                <a class="track-play" href="https://open.spotify.com/track/6sZUHZG97xeJZ0JoujpdxE" target="_blank" rel="noopener noreferrer" aria-label="Listen to Saturday Night on Spotify">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z" /></svg>
+                </a>
+              </article>
+              <article class="track">
+                <span class="track-number">02</span>
+                <a class="track-cover" href="https://open.spotify.com/track/0NekpnDs7eP7VRiUz2jNdD" target="_blank" rel="noopener noreferrer">
+                  <img src="https://i.scdn.co/image/ab67616d0000b2737082c76f8f5baf01562d65eb" alt="Another Chance cover" loading="lazy" />
+                </a>
+                <div class="track-info"><h3>Another Chance</h3><p>Kristofer Robyn</p></div>
+                <span class="track-tag">Single · 2026</span>
+                <a class="track-play" href="https://open.spotify.com/track/0NekpnDs7eP7VRiUz2jNdD" target="_blank" rel="noopener noreferrer" aria-label="Listen to Another Chance on Spotify">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z" /></svg>
+                </a>
+              </article>
+              <article class="track">
+                <span class="track-number">03</span>
+                <a class="track-cover" href="https://open.spotify.com/track/6hEkgrk3dpfN2OkQZWPSps" target="_blank" rel="noopener noreferrer">
+                  <img src="https://i.scdn.co/image/ab67616d0000b2734afbfbb5701f5daa98b6f8ef" alt="M3 cover" loading="lazy" />
+                </a>
+                <div class="track-info"><h3>M3</h3><p>Kristofer Robyn</p></div>
+                <span class="track-tag">Single · 2024</span>
+                <a class="track-play" href="https://open.spotify.com/track/6hEkgrk3dpfN2OkQZWPSps" target="_blank" rel="noopener noreferrer" aria-label="Listen to M3 on Spotify">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z" /></svg>
+                </a>
+              </article>
+              <article class="track">
+                <span class="track-number">04</span>
+                <a class="track-cover" href="https://open.spotify.com/album/30aMv7ofVq41VvRsuS2Tfp" target="_blank" rel="noopener noreferrer">
+                  <img src="https://i.scdn.co/image/ab67616d0000b273681e69d0cc8bcfcd4413f00b" alt="Project 8 Radio Edit cover" loading="lazy" />
+                </a>
+                <div class="track-info"><h3>Project 8 (Radio Edit)</h3><p>Kristofer Robyn</p></div>
+                <span class="track-tag">Single · 2024</span>
+                <a class="track-play" href="https://open.spotify.com/album/30aMv7ofVq41VvRsuS2Tfp" target="_blank" rel="noopener noreferrer" aria-label="Listen to Project 8 Radio Edit on Spotify">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z" /></svg>
+                </a>
+              </article>
+            </div>
+
+            <div class="spotify-player">
+              <iframe
+                src="https://open.spotify.com/embed/artist/0DUCPwJPxGkmYaPEmQJbLC?utm_source=generator&amp;theme=0"
+                title="Kristofer Robyn on Spotify"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="new-section" id="new">
+        <div class="release-calendar">
+          <div class="release-calendar-header">
+            <div>
+              <p class="eyebrow">Release schedule</p>
+              <h2>Upcoming<br />releases</h2>
+            </div>
+            <p>New music arriving across the next season. Save the dates.</p>
+          </div>
+
+          <div class="release-dates">
+            <article class="release-date">
+              <time datetime="2026-09-25"><span class="month">September 25</span></time>
+              <h3>Back To My Room</h3>
+              <p class="release-label">Oasis Records</p>
+              <span class="release-status">Upcoming</span>
+            </article>
+
+            <article class="release-date">
+              <time datetime="2026-10-09"><span class="month">October 9</span></time>
+              <h3>Aleluya</h3>
+              <p class="release-label">Sommersville Records</p>
+              <span class="release-status">Upcoming</span>
+            </article>
+
+            <article class="release-date">
+              <time datetime="2026-11-01"><span class="month">November 1</span></time>
+              <h3>Violet</h3>
+              <p class="release-label">VivaLIFE Records</p>
+              <span class="release-status">Upcoming</span>
+            </article>
+
+            <article class="release-date">
+              <time datetime="2026-12"><span class="month">December</span></time>
+              <h3>Mellifluous (Kristofer Robyn Remix)</h3>
+              <p class="release-label">Songspire Records</p>
+              <span class="release-status">Upcoming</span>
+            </article>
+
+            <article class="release-date">
+              <time datetime="2027-02"><span class="month">February</span></time>
+              <h3>Dreams EP</h3>
+              <p class="release-label">VivaLIFE Records</p>
+              <span class="release-status">Upcoming</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section" id="about">
+        <div class="section-wrap about-layout">
+          <p class="about-index">ABOUT</p>
+          <div class="about-copy">
+            <p class="eyebrow">Behind the sound</p><br>
+            <p>
+              Kristofer Robyn is a Mexican DJ and music producer who began his career in 2014, when he started creating his first original productions, released through his record label, VivaLIFE Records. Today, he is an emerging artist who has built a growing fanbase across Europe and the Americas. His music has crossed borders with the support of several well-established record labels in the electronic music industry, positioning him as one of the scene's most promising rising talents.
+            </p>
+            <div class="about-facts">
+              <p><span>Origin</span><strong>Mexico City, Mexico</strong></p>
+              <p><span>Genre</span><strong>Electronic</strong></p>
+              <p><span>Record label</span><strong>VivaLIFE Records</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Kristofer Robyn</p>
+      <div class="footer-links">
+        <a href="https://open.spotify.com/artist/0DUCPwJPxGkmYaPEmQJbLC" target="_blank" rel="noopener noreferrer">Spotify</a>
+        <a href="https://www.instagram.com/kristoferobyn/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://soundcloud.com/kristoferobyn" target="_blank" rel="noopener noreferrer">SoundCloud</a>
+        <a href="https://www.facebook.com/kristoferobyn/" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="mailto:vivaliferecords@gmail.com">Contact</a>
+      </div>
+    </footer>
+
+    <script>
+      const backgroundVideo = document.querySelector(".video-background video");
+
+      if (backgroundVideo) {
+        backgroundVideo.muted = true;
+        backgroundVideo.defaultMuted = true;
+        backgroundVideo.volume = 0;
+
+        const keepVideoPlaying = () => {
+          if (backgroundVideo.paused) backgroundVideo.play().catch(() => {});
+        };
+
+        backgroundVideo.addEventListener("canplay", keepVideoPlaying, { once: true });
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden) keepVideoPlaying();
+        });
+      }
+    </script>
+  </body>
+</html>
