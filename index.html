@@ -591,7 +591,10 @@
         .spotify-link { font-size: 0; }
         .spotify-link svg { width: 1.25rem; }
         .hero { padding-top: 6rem; }
-        .hero-logo { width: min(100%, 38rem); }
+        .hero-logo {
+          width: min(100vw, 38rem);
+          margin-left: calc((100% - min(100vw, 38rem)) / 2);
+        }
         .hero-bottom, .section-heading, .new-card, .about-layout { grid-template-columns: 1fr; }
         .hero-bottom { gap: 2rem; }
         .reel-link { grid-column: auto; justify-self: start; }
@@ -772,6 +775,13 @@
             </article>
 
             <article class="release-date">
+              <time datetime="2026-10-02"><span class="month">October 2</span></time>
+              <h3>Mellifluous (Kristofer Robyn Remix)</h3>
+              <p class="release-label">Songspire Records</p>
+              <span class="release-status">Upcoming</span>
+            </article>
+
+            <article class="release-date">
               <time datetime="2026-10-09"><span class="month">October 9</span></time>
               <h3>Aleluya</h3>
               <p class="release-label">Sommersville Records</p>
@@ -799,12 +809,6 @@
               <span class="release-status">Upcoming</span>
             </article>
 
-            <article class="release-date">
-              <div><span class="month">To be confirmed</span></div>
-              <h3>Mellifluous (Kristofer Robyn Remix)</h3>
-              <p class="release-label">Songspire Records</p>
-              <span class="release-status">Upcoming</span>
-            </article>
           </div>
         </div>
       </section>
